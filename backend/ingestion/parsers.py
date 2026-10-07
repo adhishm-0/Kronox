@@ -2,6 +2,7 @@
 import csv
 import html
 import json
+import logging
 import re
 import zipfile
 from pathlib import Path
@@ -9,6 +10,8 @@ from typing import Any
 from xml.etree import ElementTree as ET
 
 from .base import Parser, block
+
+logger = logging.getLogger(__name__)
 
 
 class TextParser(Parser):
@@ -65,14 +68,56 @@ class PdfParser(Parser):
             from pypdf import PdfReader  # type: ignore
         except ImportError as exc:
             raise RuntimeError("PDF support requires pypdf. Install requirements.txt.") from exc
+        reader = PdfReader(path, strict=False)
+        if reader.is_encrypted:
+            try:
+                if not reader.decrypt(""):
+                    raise ValueError("This PDF is password-protected. Remove its password and upload it again.")
+            except Exception as exc:
+                raise ValueError("This PDF is password-protected. Remove its password and upload it again.") from exc
         out = []
-        for n, page in enumerate(PdfReader(path).pages, 1):
+        for n, page in enumerate(reader.pages, 1):
             text = page.extract_text() or ""
-            if text.strip():
-                out.extend(_line_blocks(text, {"page": n}))
+            # A few stray glyphs on an otherwise scanned page are not meaningful text.
+            if len(re.sub(r"\s", "", text)) >= 20:
+                out.extend(_line_blocks(text, {"page": n}, method="embedded_text", source_type="text"))
+                continue
+            try:
+                ocr_text = _ocr_pdf_page(path, n - 1)
+            except RuntimeError:
+                raise
+            except Exception as exc:
+                logger.exception("PDF OCR failed for %s page %s", name, n)
+                raise RuntimeError(f"OCR failed on page {n} of {name}: {exc}") from exc
+            if ocr_text.strip():
+                out.extend(_line_blocks(ocr_text, {"page": n}, method="ocr", confidence=0.65, source_type="ocr"))
+            elif text.strip():
+                # Preserve sparse embedded content when OCR cannot improve it.
+                out.extend(_line_blocks(text, {"page": n}, method="embedded_text", source_type="text"))
             else:
-                out.append(block("No embedded text detected on this page. OCR is required to read this scanned page.", {"page": n}, "", "ocr_required", confidence=0.0))
+                out.append(block("OCR found no readable text on this page.", {"page": n}, "", "ocr_required", confidence=0.0, extraction_method="ocr", source_type="ocr"))
         return out
+
+
+def _ocr_pdf_page(path: str, page_index: int) -> str:
+    """Render one scanned PDF page and OCR it without requiring a separate poppler install."""
+    try:
+        import fitz  # type: ignore
+        from PIL import Image
+        import pytesseract  # type: ignore
+    except ImportError as exc:
+        raise RuntimeError("Scanned PDF OCR requires PyMuPDF, Pillow, pytesseract, and the Tesseract system executable. Install Python packages from requirements.txt and install Tesseract.") from exc
+    try:
+        with fitz.open(path) as doc:
+            page = doc.load_page(page_index)
+            pixmap = page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False)
+            image = Image.frombytes("RGB", (pixmap.width, pixmap.height), pixmap.samples)
+            try:
+                return pytesseract.image_to_string(image)
+            except pytesseract.TesseractNotFoundError as exc:
+                raise RuntimeError("Tesseract was not found. Install the Tesseract system executable and retry OCR.") from exc
+    except Exception as exc:
+        raise RuntimeError(f"Unable to render/OCR PDF page {page_index + 1}: {exc}") from exc
 
 
 class DocxParser(Parser):
@@ -168,17 +213,17 @@ class ImageParser(Parser):
             raise RuntimeError("Image OCR requires Pillow, pytesseract, and the Tesseract system package.") from exc
         if not text.strip():
             return [block("No readable text detected. Visual interpretation is not configured.", {"image": name}, "", "image", confidence=0.0)]
-        return _line_blocks(text, {"image": name}, method="ocr", confidence=0.65)
+        return _line_blocks(text, {"image": name}, method="ocr", confidence=0.65, source_type="ocr")
 
 
-def _line_blocks(text: str, base: dict[str, Any] | None = None, method: str = "parser", confidence: float = 1.0) -> list[dict[str, Any]]:
+def _line_blocks(text: str, base: dict[str, Any] | None = None, method: str = "parser", confidence: float = 1.0, source_type: str = "text") -> list[dict[str, Any]]:
     out = []
     for i, line in enumerate(text.splitlines(), 1):
         line = re.sub(r"\s+", " ", line).strip()
         if line:
             loc = dict(base or {})
             loc.setdefault("line", i)
-            out.append(block(line, loc, "", "text", extraction_method=method, confidence=confidence))
+            out.append(block(line, loc, "", "ocr_text" if source_type == "ocr" else "text", extraction_method=method, confidence=confidence, source_type=source_type))
     return out
 
 

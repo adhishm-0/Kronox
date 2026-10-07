@@ -16,6 +16,8 @@ class Evidence:
     confidence: float = 1.0
     extraction_method: str = "parser"
     source_reference: str = ""
+    chunk_id: str = ""
+    source_type: str = "text"
 
     def json(self) -> dict[str, Any]:
         return asdict(self)
@@ -31,6 +33,8 @@ class Document:
     summary: str = ""
     error: str | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
+    page_count: int | None = None
+    created_at: str | None = None
 
     def json(self) -> dict[str, Any]:
         return asdict(self)

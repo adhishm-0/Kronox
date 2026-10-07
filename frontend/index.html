@@ -5,7 +5,7 @@
   <meta name="theme-color" content="#f7f7f5"><title>DocuMind AI — Document intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/styles.css?v=4">
+  <link rel="stylesheet" href="/static/styles.css?v=7">
 </head>
 <body>
   <div class="app-shell">
@@ -31,11 +31,11 @@
         </section>
         <section class="chat-area hidden" id="chatArea"><div class="messages" id="messages"></div></section>
       </div>
-      <div class="composer-wrap"><div class="composer"><textarea id="question" rows="1" placeholder="Ask anything about your documents..."></textarea><div class="composer-footer"><span class="source-hint"><span class="source-spark">✳</span><span id="sourceCount">Upload documents to start asking</span></span><button class="send" id="send" aria-label="Send question"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5m0 0L6 11m6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div><div class="composer-note">DocuMind answers from your sources. <span>Always verify important details.</span></div></div>
+      <div class="composer-wrap"><div class="composer"><textarea id="question" rows="1" placeholder="Ask anything about your documents..."></textarea><div class="composer-footer"><button class="attach" id="attachFile" type="button" aria-label="Upload documents" title="Upload documents"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><span class="source-hint"><span class="source-spark">✳</span><span id="sourceCount">Upload documents to start asking</span></span><button class="send" id="send" aria-label="Send question"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5m0 0L6 11m6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div><div class="composer-note">DocuMind answers from your sources. <span>Always verify important details.</span></div></div>
     </main>
     <input type="file" id="fileInput" multiple hidden accept=".pdf,.docx,.pptx,.xlsx,.csv,.json,.xml,.yaml,.yml,.txt,.md,.markdown,.rtf,.html,.htm,.png,.jpg,.jpeg,.webp,.tif,.tiff,.bmp">
     <div class="toast" id="toast" role="status"></div>
   </div>
   <script>window.addEventListener('error',function(e){var panel=document.createElement('div');panel.style='position:fixed;z-index:99999;left:16px;right:16px;bottom:16px;padding:14px 16px;background:#3b2424;color:white;border-radius:8px;font:13px system-ui';panel.textContent='DocuMind could not start: '+(e.message||'a browser error occurred')+'. Reload the page; if it continues, open the browser console and share this message.';document.body.appendChild(panel)});</script>
-  <script src="/static/app.js?v=4"></script>
+  <script src="/static/app.js?v=7"></script>
 </body></html>
