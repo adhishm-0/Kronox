@@ -1,6 +1,6 @@
-# DocuMind AI
+# Kronox
 
-An evidence-first document workspace. It extracts and indexes uploaded documents locally, retrieves matching passages, then uses the OpenAI Responses API to write a natural language answer grounded in those passages. Answers include source locations.
+DocuMind is an evidence-first document workspace. It extracts and indexes uploaded documents locally, retrieves matching passages, then uses the OpenAI Responses API to write a natural language answer grounded in those passages. Answers include source locations.
 
 ## Run locally
 
