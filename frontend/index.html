@@ -4,13 +4,8 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#ffffff"><title>DocuMind AI — Document intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<<<<<<< Updated upstream
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/styles.css?v=7">
-=======
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600;1,700&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/styles.css?v=5">
->>>>>>> Stashed changes
+  <link rel="stylesheet" href="/static/styles.css?v=13">
 </head>
 <body>
   <div class="app-shell">
@@ -21,29 +16,33 @@
       <div class="search-results hidden" id="searchResults"></div>
       <div class="side-label projects-label">PROJECTS <button title="Create project" id="addProject">＋</button></div>
       <div class="projects" id="projects"></div>
-      <div class="side-label">WORKSPACE</div>
+      <div class="side-label">HISTORY</div>
       <div class="workspace-conversations" id="workspaceConversations"></div>
+      <div class="side-label documents-label">DOCUMENTS</div>
       <div class="collection" id="documents"></div>
-      <div class="sidebar-bottom"><div class="workspace-avatar">A</div><div class="workspace-copy"><b data-i18n="workspace">Personal workspace</b><span data-i18n="freePlan">Free plan</span></div><button class="more" id="workspaceMenuButton" aria-label="Workspace menu" aria-expanded="false">···</button><div class="workspace-menu hidden" id="workspaceMenu"><button data-panel="settings"><span>⚙</span><span data-i18n="settings">Settings</span></button><button data-panel="profile"><span>▦</span><span data-i18n="profile">Profile</span></button><button data-panel="personalization"><span>✦</span><span data-i18n="personalization">Personalization</span></button></div></div>
     </aside>
     <main class="main">
-      <header class="topbar"><div class="breadcrumbs"><span data-i18n="workspaceLabel">Workspace</span><i>/</i><b id="conversationTitle" data-i18n="newConversation">New conversation</b><button class="rename-conversation" id="renameConversation" type="button" aria-label="Rename conversation" title="Rename conversation">✎</button></div><div class="top-actions"><span class="secure"><span></span> <span data-i18n="privateWorkspace">Private workspace</span></span><button class="icon-button" aria-label="Help">?</button><div class="profile">A</div></div></header>
+      <header class="topbar"><div class="breadcrumbs"><span data-i18n="workspaceLabel">Workspace</span><i>/</i><b id="conversationTitle" data-i18n="newConversation">New conversation</b><button class="rename-conversation" id="renameConversation" type="button" aria-label="Rename conversation" title="Rename conversation">✎</button></div><div class="top-actions"><div class="workspace-copy"><b data-i18n="workspace">Personal workspace</b><span data-i18n="freePlan">Free plan</span></div><button class="workspace-avatar" id="workspaceMenuButton" type="button" aria-label="Workspace menu" aria-expanded="false">A</button><div class="workspace-menu hidden" id="workspaceMenu"><button data-panel="settings"><span>⚙</span><span data-i18n="settings">Settings</span></button><button data-panel="profile"><span>▦</span><span data-i18n="profile">Profile</span></button><button data-panel="personalization"><span>✦</span><span data-i18n="personalization">Personalization</span></button></div></div></header>
       <div class="content" id="content">
         <section class="welcome" id="welcome">
-          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR DOCUMENTS, IN CONTEXT</div>
-          <h1 class="welcome-statement">You Upload. We Analyze. We Answer.</h1>
-          <button class="upload-card" id="uploadCard"><span class="upload-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="upload-copy"><b>Drop documents to get started</b><small>or <u>browse files</u> from your computer</small></span><span class="upload-limit">UP TO 20 MB EACH</span></button>
-          <div class="formats"><span>PDF</span><span>DOCX</span><span>PPTX</span><span>XLSX</span><span>CSV</span><span>JSON</span><span>IMAGES</span><span>+ MORE</span></div>
-          <div class="suggestions"><div class="suggestion-head"><span>TRY ASKING</span><span class="suggestion-rule"></span><span>ONCE YOU UPLOAD</span></div><div class="suggestion-grid"><button class="suggestion" data-question="Summarize all uploaded documents"><span class="suggestion-mark">✳</span>Summarize my documents<span>↗</span></button><button class="suggestion" data-question="Find contradictions between the reports"><span class="suggestion-mark">⌁</span>Find contradictions<span>↗</span></button><button class="suggestion" data-question="What was the highest revenue?"><span class="suggestion-mark">↗</span>Find the highest revenue<span>↗</span></button><button class="suggestion" data-question="List the key decisions and action items from these documents"><span class="suggestion-mark">✓</span>Extract decisions & action items<span>↗</span></button><button class="suggestion" data-question="Compare the main findings across all uploaded documents"><span class="suggestion-mark">⇄</span>Compare document findings<span>↗</span></button><button class="suggestion" data-question="What important information is missing or uncertain in these documents?"><span class="suggestion-mark">?</span>Spot gaps and uncertainties<span>↗</span></button></div></div>
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <div class="hero-eyebrow">✦ DOCUMENT INTELLIGENCE</div>
+              <h1 class="hero-title">YOUR DOCUMENTS.<br><span>IN CONTEXT.</span></h1>
+              <p class="hero-subtitle">Answers that show their work.</p>
+              <p class="intro">Ask questions across your files and trace every answer back to its source.</p>
+            </div>
+          </div>
         </section>
         <section class="chat-area hidden" id="chatArea"><div class="messages" id="messages"></div></section>
       </div>
-      <div class="composer-wrap"><div class="composer"><textarea id="question" rows="1" placeholder="Ask anything about your documents..."></textarea><div class="composer-footer"><button class="attach" id="attachFile" type="button" aria-label="Upload documents" title="Upload documents"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><span class="source-hint"><span class="source-spark">✳</span><span id="sourceCount">Upload documents to start asking</span></span><button class="send" id="send" aria-label="Send question"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5m0 0L6 11m6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div><div class="composer-note">DocuMind answers from your sources. <span>Always verify important details.</span></div></div>
+      <div class="composer-wrap"><div class="composer"><textarea id="question" rows="1" placeholder="Ask anything, or paste a screenshot..."></textarea><div class="composer-footer"><button class="attach" id="attachFile" type="button" aria-label="Upload documents" title="Upload documents"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><span class="source-hint"><span class="source-spark">✳</span><span id="sourceCount">Upload documents to start asking</span></span><button class="send" id="send" aria-label="Send question"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5m0 0L6 11m6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div><div class="composer-note">Paste a screenshot to upload it. DocuMind answers from your sources. <span>Always verify important details.</span></div></div>
     </main>
     <input type="file" id="fileInput" multiple hidden accept=".pdf,.docx,.pptx,.xlsx,.csv,.json,.xml,.yaml,.yml,.txt,.md,.markdown,.rtf,.html,.htm,.png,.jpg,.jpeg,.webp,.tif,.tiff,.bmp">
     <div class="toast" id="toast" role="status"></div>
+    <div class="preview-backdrop hidden" id="previewBackdrop"><section class="document-preview" role="dialog" aria-modal="true" aria-labelledby="previewTitle"><header class="preview-header"><h2 id="previewTitle">Document preview</h2><a id="previewDownload" target="_blank" rel="noopener">Open original</a><button id="previewClose" type="button" aria-label="Close preview">×</button></header><div class="preview-body" id="previewBody"></div></section></div>
     <div class="panel-backdrop hidden" id="panelBackdrop"><section class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle"><button class="panel-close" id="panelClose" aria-label="Close">×</button><div class="panel-kicker">WORKSPACE</div><h2 id="panelTitle">Settings</h2><div id="panelContent"></div></section></div>
   </div>
   <script>window.addEventListener('error',function(e){var panel=document.createElement('div');panel.style='position:fixed;z-index:99999;left:16px;right:16px;bottom:16px;padding:14px 16px;background:#3b2424;color:white;border-radius:8px;font:13px system-ui';panel.textContent='DocuMind could not start: '+(e.message||'a browser error occurred')+'. Reload the page; if it continues, open the browser console and share this message.';document.body.appendChild(panel)});</script>
-  <script src="/static/app.js?v=7"></script>
+  <script src="/static/app.js?v=16"></script>
 </body></html>

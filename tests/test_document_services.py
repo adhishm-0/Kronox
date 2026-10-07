@@ -6,7 +6,7 @@ from unittest import skipUnless
 import importlib.util
 
 from backend.services.chunking import chunk_blocks
-from backend.services.citations import citation_label
+from backend.services.citations import citation_label, consolidate_citations
 from backend.services.retrieval import rank_payloads
 from backend.ingestion.parsers import CsvParser, PdfParser
 
@@ -71,6 +71,21 @@ class CitationTests(unittest.TestCase):
 
     def test_non_pdf_locations_are_not_fabricated_as_pages(self):
         self.assertEqual(citation_label({"document_name": "slides.pptx", "location": {"slide": 4}}), "slides.pptx, slide 4")
+
+    def test_repeated_inline_references_become_one_source_footer(self):
+        evidence = [
+            {"document_name": "report.pdf", "location": {"page": 2}},
+            {"document_name": "report.pdf", "location": {"page": 3}},
+        ]
+        answer = "Revenue rose [report.pdf, p.2]. The total is shown on page 3 [report.pdf, p.3]. Again, page 2 [report.pdf, p.2]."
+        result = consolidate_citations(answer, evidence)
+        self.assertEqual(result.count("Source:"), 1)
+        self.assertTrue(result.endswith("Source: [report.pdf, p.2]; [report.pdf, p.3]"))
+        self.assertNotIn("rose [report.pdf", result)
+
+    def test_numbered_model_citations_map_to_real_source_labels(self):
+        evidence = [{"document_name": "report.pdf", "location": {"page": 7}}]
+        self.assertEqual(consolidate_citations("The result is 21 [1].", evidence), "The result is 21.\n\nSource: [report.pdf, p.7]")
 
 
 class ParserTests(unittest.TestCase):
