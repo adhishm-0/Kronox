@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f7f5"><title>DocuMind AI — Document intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css?v=4">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><span class="brand-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M7 3.75h7l5 5v11.5H7a2 2 0 0 1-2-2v-12a2.5 2.5 0 0 1 2-2.5Z" stroke="currentColor" stroke-width="1.6"/><path d="M14 4v5h5M8.5 13h7M8.5 16.5h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span><span>documind<span class="brand-dot">.</span></span></a>
+      <button class="new-chat" id="newChat"><span>＋</span> New conversation <kbd>⌘ K</kbd></button>
+      <label class="sidebar-search"><span>⌕</span><input id="collectionSearch" placeholder="Search documents..." aria-label="Search across documents"></label>
+      <div class="search-results hidden" id="searchResults"></div>
+      <div class="side-label">WORKSPACE <button title="Add documents" id="sideAdd">＋</button></div>
+      <div class="collection" id="documents"></div>
+      <div class="sidebar-bottom"><div class="workspace-avatar">A</div><div class="workspace-copy"><b>Personal workspace</b><span>Free plan</span></div><button class="more">···</button></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="breadcrumbs"><span>Workspace</span><i>/</i><b>New conversation</b></div><div class="top-actions"><span class="secure"><span></span> Private workspace</span><button class="icon-button" aria-label="Help">?</button><div class="profile">A</div></div></header>
+      <div class="content" id="content">
+        <section class="welcome" id="welcome">
+          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR DOCUMENTS, IN CONTEXT</div>
+          <h1>Answers that<br><em>show their work.</em></h1>
+          <p class="intro">Bring your documents together. Ask a question, trace the evidence, and see exactly where an answer came from.</p>
+          <button class="upload-card" id="uploadCard"><span class="upload-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="upload-copy"><b>Drop documents to get started</b><small>or <u>browse files</u> from your computer</small></span><span class="upload-limit">UP TO 20 MB EACH</span></button>
+          <div class="formats"><span>PDF</span><span>DOCX</span><span>PPTX</span><span>XLSX</span><span>CSV</span><span>JSON</span><span>IMAGES</span><span>+ MORE</span></div>
+          <div class="suggestions"><div class="suggestion-head"><span>TRY ASKING</span><span class="suggestion-rule"></span><span>ONCE YOU UPLOAD</span></div><div class="suggestion-grid"><button class="suggestion" data-question="Summarize all uploaded documents"><span class="suggestion-mark">✳</span>Summarize my documents<span>↗</span></button><button class="suggestion" data-question="Find contradictions between the reports"><span class="suggestion-mark">⌁</span>Find contradictions<span>↗</span></button><button class="suggestion" data-question="What was the highest revenue?"><span class="suggestion-mark">↗</span>Find the highest revenue<span>↗</span></button></div></div>
+        </section>
+        <section class="chat-area hidden" id="chatArea"><div class="messages" id="messages"></div></section>
+      </div>
+      <div class="composer-wrap"><div class="composer"><textarea id="question" rows="1" placeholder="Ask anything about your documents..."></textarea><div class="composer-footer"><span class="source-hint"><span class="source-spark">✳</span><span id="sourceCount">Upload documents to start asking</span></span><button class="send" id="send" aria-label="Send question"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5m0 0L6 11m6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div><div class="composer-note">DocuMind answers from your sources. <span>Always verify important details.</span></div></div>
+    </main>
+    <input type="file" id="fileInput" multiple hidden accept=".pdf,.docx,.pptx,.xlsx,.csv,.json,.xml,.yaml,.yml,.txt,.md,.markdown,.rtf,.html,.htm,.png,.jpg,.jpeg,.webp,.tif,.tiff,.bmp">
+    <div class="toast" id="toast" role="status"></div>
+  </div>
+  <script>window.addEventListener('error',function(e){var panel=document.createElement('div');panel.style='position:fixed;z-index:99999;left:16px;right:16px;bottom:16px;padding:14px 16px;background:#3b2424;color:white;border-radius:8px;font:13px system-ui';panel.textContent='DocuMind could not start: '+(e.message||'a browser error occurred')+'. Reload the page; if it continues, open the browser console and share this message.';document.body.appendChild(panel)});</script>
+  <script src="/static/app.js?v=4"></script>
+</body></html>
